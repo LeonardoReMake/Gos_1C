@@ -5,12 +5,18 @@ def patch(file1):
 	result = ""
 	instructions = []
 	i = 0
+
+	offset = 0
 	for line in file1:
 		if ("#" not in line):
-			result += line
+			if (offset != 0):
+				result += line[offset:]
+				offset = 0
+			else:
+				result += line
 			continue
 
-		print(line)
+		# print(line)
 		result = result[:-1]
 		s1 = line.find('#', 1)
 		s2 = line.find('#', s1+1)
@@ -20,9 +26,11 @@ def patch(file1):
 		length = int(line[s2+1:s3])
 		sequence = line[s3+1:]
 		instructions.append((start, end, length, sequence, len(line)))
-		print(start, end, length, sequence)
 
-	print(result)
+		offset = length-len(sequence)
+		# print(start, end, length, sequence)
+
+	# print(result)
 	offset = 0
 	for inst in instructions:
 		start = inst[0]
