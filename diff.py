@@ -43,6 +43,8 @@ def make_instructions(path, seq1, seq2):
 				is_modifying = False
 				instruction = "#" + str(m_start) + "#" + str(m_end) + "#" + str(len(m_sequence)) + "#" + get_str(m_sequence)
 				result.append((m_start, instruction))
+				# print("added " + get_str(m_sequence))
+				# print("length = " + str(result))
 				m_sequence = []
 			continue
 
@@ -180,13 +182,16 @@ def create_merge_text(file1, instructions):
 			addition += 2 + len(first[1])
 			i += addition
 			instructions.pop()
-			
+
 		result += chr(character)
 		# print("i", i)
 		# print("addition", addition)
 		# print(result)
 		# print(chr(character))
 		i += 1
+
+	if (len(instructions) > 0):
+		result += "\n" + instructions[0][1] + "\n"
 
 	return result
 
